@@ -170,3 +170,35 @@ describe.each([
         });
     }
 );
+
+describe("validate function", () => {
+    test("should throw an error if BlurayPackage is selected without VideoRecording", () => {
+        const selectedServices: ServiceType[] = ["BlurayPackage"];
+        const selectedYear: ServiceYear = 2021;
+
+        expect(() => calculatePrice(selectedServices, selectedYear)).toThrowError(
+            "BlurayPackage should not be added if VideoRecording was not added."
+        );
+    });
+
+    test("should not throw an error if BlurayPackage and VideoRecording are both selected", () => {
+        const selectedServices: ServiceType[] = ["BlurayPackage", "VideoRecording"];
+        const selectedYear: ServiceYear = 2021;
+
+        expect(() => calculatePrice(selectedServices, selectedYear)).not.toThrow();
+    });
+
+    test("should not throw an error if only VideoRecording is selected", () => {
+        const selectedServices: ServiceType[] = ["VideoRecording"];
+        const selectedYear: ServiceYear = 2021;
+
+        expect(() => calculatePrice(selectedServices, selectedYear)).not.toThrow();
+    });
+
+    test("should not throw an error if neither BlurayPackage nor VideoRecording are selected", () => {
+        const selectedServices: ServiceType[] = ["Photography", "TwoDayEvent"];
+        const selectedYear: ServiceYear = 2021;
+
+        expect(() => calculatePrice(selectedServices, selectedYear)).not.toThrow();
+    });
+});

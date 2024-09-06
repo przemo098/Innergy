@@ -3,9 +3,18 @@ import {ServiceYear} from "../types/ServiceYear";
 import {calculateDiscounts} from "./discountService";
 
 const sum = (values: number[]): number => values.reduce((total, value) => total + value, 0);
-export const calculatePrice = (selectedServices: ServiceType[], selectedYear: ServiceYear) => {
+
+function validate(selectedServices: ServiceType[], selectedYear: ServiceYear){
 		if(selectedYear < 2020 || selectedYear > 2022)
 				throw new Error("Argument out of range");
+
+		if(selectedServices.includes("BlurayPackage") && !selectedServices.includes("VideoRecording")) {
+				throw new Error("BlurayPackage should not be added if VideoRecording was not added.");
+		}
+}
+
+export const calculatePrice = (selectedServices: ServiceType[], selectedYear: ServiceYear) => {
+		validate(selectedServices, selectedYear);
 
 		const basePrices = selectedServices.map(service => servicePrices[selectedYear][service]);
 		const basePrice = sum(basePrices);
