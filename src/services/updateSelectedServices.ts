@@ -1,4 +1,4 @@
-import {ServiceType} from "./types/ServiceType";
+import {ServiceType} from "../types/ServiceType";
 
 export const updateSelectedServices = (
 		previouslySelectedServices: ServiceType[],
