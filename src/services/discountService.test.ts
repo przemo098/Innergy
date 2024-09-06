@@ -1,4 +1,4 @@
-import {calculateDiscounts} from "./discountService";
+import {calculateDiscounts, validateDiscounts} from "./discountService";
 
 describe("calculateDiscounts", () => {
 
@@ -63,5 +63,45 @@ describe("calculateDiscounts", () => {
 						{ "2021 VideoRecording + Photography": 1300 }
 				]);
 		});
+});
 
+describe('validateDiscounts', () => {
+
+		it('should not throw an error when no duplicates exist', () => {
+				const discounts = [
+						{ "item1": 10 },
+						{ "item2": 20 },
+						{ "item3": 15 }
+				];
+
+				expect(() => validateDiscounts(discounts)).not.toThrow();
+		});
+
+		it('should throw an error when there are duplicate keys', () => {
+				const discounts = [
+						{ "item1": 10 },
+						{ "item1": 20 }, // Duplicate key
+						{ "item3": 15 }
+				];
+
+				expect(() => validateDiscounts(discounts)).toThrowError("calculateDiscounts function returns duplicates. Please check the logic.");
+		});
+
+		it('should throw an error when there are multiple duplicates', () => {
+				const discounts = [
+						{ "item1": 10 },
+						{ "item2": 20 },
+						{ "item2": 25 }, // Duplicate key
+						{ "item3": 30 },
+						{ "item1": 40 }  // Another duplicate key
+				];
+
+				expect(() => validateDiscounts(discounts)).toThrowError("calculateDiscounts function returns duplicates. Please check the logic.");
+		});
+
+		it('should not throw an error for an empty array of discounts', () => {
+				const discounts: Record<string, number>[] = [];
+
+				expect(() => validateDiscounts(discounts)).not.toThrow();
+		});
 });

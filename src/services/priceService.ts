@@ -5,7 +5,7 @@ import {calculateDiscounts} from "./discountService";
 const sum = (values: number[]): number => values.reduce((total, value) => total + value, 0);
 export const calculatePrice = (selectedServices: ServiceType[], selectedYear: ServiceYear) => {
 		if(selectedYear < 2020 || selectedYear > 2022)
-				throw "Argument out of range";
+				throw new Error("Argument out of range");
 
 		const basePrices = selectedServices.map(service => servicePrices[selectedYear][service]);
 		const basePrice = sum(basePrices);
