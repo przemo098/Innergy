@@ -112,6 +112,21 @@ describe.each([
 });
 
 describe.each([
+    [2020, 400],
+    [2021, 400],
+    [2022, 400]
+])("calculate two day event (%i increase by %i)", (year: ServiceYear, increase) => {
+    test("price matches requirements", () => {
+        const withoutPhotography = calculatePrice(["VideoRecording"], year);
+        const withPhotography = calculatePrice(["VideoRecording", "TwoDayEvent"], year);
+
+        const priceChangeWithPhotography = withPhotography.finalPrice - withoutPhotography.finalPrice;
+
+        expect(priceChangeWithPhotography).toEqual(increase);
+    });
+});
+
+describe.each([
     [2020, 300],
     [2021, 300],
     [2022, 0]
