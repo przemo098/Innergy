@@ -1,5 +1,5 @@
-export type ServiceYear = 2020 | 2021 | 2022;
-export type ServiceType = "Photography" | "VideoRecording" | "BlurayPackage" | "TwoDayEvent" | "WeddingSession";
+import {ServiceType} from "./types/ServiceType";
+import {ServiceYear} from "./types/ServiceYear";
 
 export const updateSelectedServices = (
     previouslySelectedServices: ServiceType[],
